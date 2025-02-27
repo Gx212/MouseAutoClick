@@ -28,29 +28,31 @@ namespace MouseAutoClick
             // 订阅事件
             mouseHook.MousePositionCaptured += MouseHook_MousePositionCaptured;
             clicker = new MouseClicker(); // 在构造函数中初始化 clicker
-            button2.Enabled = false;
+
+            comboBox1.SelectedIndex = 0;
+            comboBox2.SelectedIndex = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)//选择点击的两个坐标
         {
             clickCount = 0;
-            textBox1.Text = "";
-            textBox2.Text = "";
+            comboBox1.Text = "";
+            comboBox2.Text = "";
             button1.Enabled = false;
             mouseHook.IsCapturing = true;
             mouseHook.StartHook();
             infoBox.Text += "点击屏幕选择两个坐标！\r\n";
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)//监听按钮
         {
             try
             {
                 if (!isMonitoringSideButtons)
                 {
                     // 从文本框获取参数
-                    string point1 = textBox1.Text;
-                    string point2 = textBox2.Text;
+                    string point1 = comboBox1.Text;
+                    string point2 = comboBox2.Text;
                     int count = int.Parse(textBox3.Text);
                     int interval = int.Parse(textBox4.Text);
 
@@ -120,15 +122,16 @@ namespace MouseAutoClick
 
             if (clickCount == 0)
             {
-                textBox1.Text = $"{e.X},{e.Y}";
+                //textBox1.Text = $"{e.X},{e.Y}";
+                comboBox1.Text = $"{e.X},{e.Y}";
                 clickCount++;
             }
             else if (clickCount == 1)
             {
-                textBox2.Text = $"{e.X},{e.Y}";
-
-                infoBox.Text += $"已添加两次点击坐标（{textBox1.Text}）;({textBox2.Text})\r\n";
-                button2.Enabled = true;
+                //textBox2.Text = $"{e.X},{e.Y}";
+                comboBox2.Text = $"{e.X},{e.Y}";
+                //infoBox.Text += $"已添加两次点击坐标（{textBox1.Text}）;({textBox2.Text})\r\n";
+                infoBox.Text += $"已添加两次点击坐标（{comboBox1.Text}）;({comboBox2.Text})\r\n";//修改为下拉框
 
                 clickCount++;
                 mouseHook.IsCapturing = false;
